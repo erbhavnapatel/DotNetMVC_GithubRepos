@@ -13,10 +13,5 @@ namespace DotNetMVC_GithubRepos.Web.Controllers
         {
             return View();
         }
-
-        public ActionResult RedirectAction()
-        {
-            return RedirectToAction("Index", "Repositories");
-        }
     }
 }

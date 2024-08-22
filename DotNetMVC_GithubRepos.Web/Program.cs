@@ -7,7 +7,7 @@ using RestSharp;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configure services
+#region Configure Services
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -20,11 +20,13 @@ builder.Services.AddSingleton<RestClient>(provider =>
     client.AddDefaultHeader("User-Agent", "GitHubRepoApp");
     return client;
 });
+#endregion
 
+#region Hangfire
 builder.Services.AddHangfire(configuration =>
     configuration.UseSqlServerStorage(builder.Configuration.GetConnectionString("HangfireConnection")));
 builder.Services.AddHangfireServer();
-
+#endregion
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -61,6 +63,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+// Call recurring job
 RecurringJob.AddOrUpdate<IRepositoryService>(
     "fetch-repositories",
     service => service.FetchAndSaveDataAsync(),

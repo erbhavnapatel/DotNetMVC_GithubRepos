@@ -17,8 +17,7 @@ namespace DotNetMVC_GithubRepos.Application.Services
 
         public async Task FetchAndSaveDataAsync()
         {
-            var repositories = await _gitHubService.FetchRepositoriesAsync("python"); // Adjust query as needed
-
+            var repositories = await _gitHubService.FetchRepositoriesAsync("python");
             _context.Repositories.RemoveRange(await _context.Repositories.ToListAsync());
             await _context.Repositories.AddRangeAsync(repositories);
             await _context.SaveChangesAsync();

@@ -25,22 +25,26 @@ namespace DotNetMVC_GithubRepos.Application.Services
                 throw new Exception("Failed to fetch data from GitHub");
             }
 
-            var data = JObject.Parse(response.Content);
             var repositories = new List<GitRepository>();
-
-            foreach (var item in data["items"])
+            if (response != null && response.Content != null)
             {
-                repositories.Add(new GitRepository
+                var data = JObject.Parse(response.Content);
+                if (data != null && data["items"] != null)
                 {
-                    Id = item["id"].ToString(),
-                    Name = item["name"].ToString(),
-                    FullName = item["full_name"].ToString(),
-                    Description = item["description"]?.ToString(),
-                    CreatedAt = DateTime.Parse(item["created_at"].ToString()),
-                    ForksCount = int.Parse(item["forks_count"].ToString())
-                });
+                    foreach (var item in data["items"])
+                    {
+                        repositories.Add(new GitRepository
+                        {
+                            Id = item["id"].ToString() ?? "",
+                            Name = item["name"].ToString() ?? "",
+                            FullName = item["full_name"].ToString() ?? "",
+                            Description = item["description"]?.ToString() ?? "",
+                            CreatedAt = DateTime.Parse(item["created_at"].ToString()),
+                            ForksCount = int.Parse(item["forks_count"].ToString())
+                        });
+                    }
+                }
             }
-
             return repositories;
         }
     }
