@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="RestSharp" Version="111.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DotNetMVC_GithubRepos.Domain\DotNetMVC_GithubRepos.Domain.csproj" />
+    <ProjectReference Include="..\DotNetMVC_GithubRepos.Infrastructure\DotNetMVC_GithubRepos.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<DotNetMVC_GithubRepos.Domain.Entities.GitRepository>
+
+@{
+    ViewData["Title"] = "Repositories";
+}
+
+<h1>Repositories</h1>
+
+<form method="get" asp-action="Index">
+    <input type="text" name="searchString" placeholder="Search by name" value="@ViewData["SearchString"]" />
+    <input type="submit" value="Search" />
+    <input type="submit" value="Cancel" href="@Url.Action("Index")" />
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Full Name</th>
+            <th>Description</th>
+            <th>Created At</th>
+            <th>Forks Count</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var repo in Model)
+        {
+            <tr>
+                <td>@repo.Name</td>
+                <td>@repo.FullName</td>
+                <td>@repo.Description</td>
+                <td>@repo.CreatedAt.ToShortDateString()</td>
+                <td>@repo.ForksCount</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    @if (ViewBag.CurrentPage > 1)
+    {
+        <a asp-action="Index" asp-route-page="@(ViewBag.CurrentPage - 1)" asp-route-searchString="@ViewData["SearchString"]">Previous</a>
+    }
+
+    @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+    {
+        <a asp-action="Index" asp-route-page="@(ViewBag.CurrentPage + 1)" asp-route-searchString="@ViewData["SearchString"]">Next</a>
+    }
+
+    <div class="developer">
+        <span>Page @(ViewBag.CurrentPage) of @(ViewBag.TotalPages)</span>
+    </div>
+</div>
