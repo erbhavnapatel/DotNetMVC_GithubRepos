@@ -31,6 +31,8 @@ namespace DotNetMVC_GithubRepos.Web.Controllers
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = (int)Math.Ceiling(await repositories.CountAsync() / (double)pageSize);
 
+            ViewData["SearchString"] = searchString;
+
             return View(paginatedRepositories);
         }
     }

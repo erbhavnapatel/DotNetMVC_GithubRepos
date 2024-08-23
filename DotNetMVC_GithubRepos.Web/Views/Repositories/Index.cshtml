@@ -2,10 +2,11 @@
 
 @{
     ViewData["Title"] = "Repositories";
+    var searchString = ViewData["SearchString"]?.ToString();
 }
 
 <form method="get" asp-action="Index">
-    <input type="text" name="searchString" placeholder="Search by name" value="@ViewData["SearchString"]" />
+    <input type="text" name="searchString" placeholder="Search by name" value="@searchString" />
     <input type="submit" value="Search" />
     <input type="submit" value="Cancel" href="@Url.Action("Index")" />
 </form>
@@ -39,12 +40,12 @@
 <div class="pagination-container">
     @if (ViewBag.CurrentPage > 1)
     {
-        <a asp-action="Index" asp-route-page="@(ViewBag.CurrentPage - 1)" asp-route-searchString="@ViewData["SearchString"]">Previous</a>
+        <a asp-action="Index" asp-route-page="@(ViewBag.CurrentPage - 1)" asp-route-searchString="@searchString">Previous</a>
     }
 
     @if (ViewBag.CurrentPage < ViewBag.TotalPages)
     {
-        <a asp-action="Index" asp-route-page="@(ViewBag.CurrentPage + 1)" asp-route-searchString="@ViewData["SearchString"]">Next</a>
+        <a asp-action="Index" asp-route-page="@(ViewBag.CurrentPage + 1)" asp-route-searchString="@searchString">Next</a>
     }
 
     <span>Page @(ViewBag.CurrentPage) of @(ViewBag.TotalPages)</span>
